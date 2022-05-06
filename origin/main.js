@@ -1,10 +1,41 @@
 window.addEventListener('scroll', onScroll);
 
-onScroll()
+onScroll();
 
 function onScroll() {
-	showNavOnScroll()
-	showBackToTopButtonOnScroll()
+	showNavOnScroll();
+	showBackToTopButtonOnScroll();
+
+	activateMenuAtCurrentSection(home);
+	activateMenuAtCurrentSection(services);
+	activateMenuAtCurrentSection(about);
+	activateMenuAtCurrentSection(contact);
+}
+
+function activateMenuAtCurrentSection(section) {
+	const targetLine = scrollY + innerHeight / 2;
+
+	const sectionTop = section.offsetTop;
+	const sectionHeight = section.offsetHeight;
+
+	const sectionTopReachOrPassedTargetLine = targetLine >= sectionTop;
+
+	console.log(' o topo chegou ou passou da linha?', sectionTopReachOrPassedTargetLine);
+
+	const sectionEndsAt = sectionTop + sectionHeight;
+
+	const sectionEndPassedTargetLine = sectionEndsAt <= targetLine;
+
+	const sectionBoundaries =
+		sectionTopReachOrPassedTargetLine && !sectionEndPassedTargetLine;
+
+	const sectionId = section.getAtribute('id');
+	const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`);
+
+	menuElement.classList.remove('active');
+	if (sectionBoundaries) {
+		menuElement.classList.add('active');
+	}
 }
 
 function showNavOnScroll() {
@@ -20,21 +51,21 @@ function showBackToTopButtonOnScroll() {
 		backToTopButton.classList.add('show');
 	} else {
 		backToTopButton.classList.remove('show');
-}
+	}
 
-function openMenu() {
-	document.body.classList.add('menu-expanded');
-}
+	function openMenu() {
+		document.body.classList.add('menu-expanded');
+	}
 
-function closeMenu() {
-	document.body.classList.remove('menu-expanded');
-}
+	function closeMenu() {
+		document.body.classList.remove('menu-expanded');
+	}
 
-ScrollReveal({
-	origin: 'top',
-	distance: '30px',
-	duration: 700
-}).reveal(`
+	ScrollReveal({
+		origin: 'top',
+		distance: '30px',
+		duration: 700
+	}).reveal(`
 	#home, 
 	#home img, 
 	#home .stats, 
@@ -45,3 +76,4 @@ ScrollReveal({
 	#about header,
 	#about .content,
 	`);
+}
