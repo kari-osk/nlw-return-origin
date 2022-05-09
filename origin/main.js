@@ -20,7 +20,7 @@ function activateMenuAtCurrentSection(section) {
 
 	const sectionTopReachOrPassedTargetLine = targetLine >= sectionTop;
 
-	console.log(' o topo chegou ou passou da linha?', sectionTopReachOrPassedTargetLine);
+	// console.log(' o topo chegou ou passou da linha?', sectionTopReachOrPassedTargetLine);
 
 	const sectionEndsAt = sectionTop + sectionHeight;
 
@@ -29,7 +29,7 @@ function activateMenuAtCurrentSection(section) {
 	const sectionBoundaries =
 		sectionTopReachOrPassedTargetLine && !sectionEndPassedTargetLine;
 
-	const sectionId = section.getAtribute('id');
+	const sectionId = section.getAttribute('id');
 	const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`);
 
 	menuElement.classList.remove('active');
@@ -47,33 +47,32 @@ function showNavOnScroll() {
 }
 
 function showBackToTopButtonOnScroll() {
-	if (scrollY > 1000) {
+	if (scrollY > 650) {
 		backToTopButton.classList.add('show');
 	} else {
 		backToTopButton.classList.remove('show');
 	}
+}
 
-	function openMenu() {
-		document.body.classList.add('menu-expanded');
-	}
+function openMenu() {
+	document.body.classList.add('menu-expanded');
+}
 
-	function closeMenu() {
-		document.body.classList.remove('menu-expanded');
-	}
+function closeMenu() {
+	document.body.classList.remove('menu-expanded');
+}
 
-	ScrollReveal({
-		origin: 'top',
-		distance: '30px',
-		duration: 700
-	}).reveal(`
+ScrollReveal({
+	origin: 'top',
+	distance: '30px',
+	duration: 700
+}).reveal(`
 	#home, 
 	#home img, 
 	#home .stats, 
-	#services
+	#services,
 	#services header,
 	#services .card,
 	#about,
 	#about header,
-	#about .content,
-	`);
-}
+	#about .content`);
